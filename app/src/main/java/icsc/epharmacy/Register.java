@@ -12,6 +12,7 @@ public class Register extends AppCompatActivity {
     private EditText password;
     private EditText confirmPassword;
     private EditText email;
+    DatabaseManager db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +21,7 @@ public class Register extends AppCompatActivity {
         password=(EditText)findViewById(R.id.editTextPassword);
         confirmPassword=(EditText)findViewById(R.id.editTextConfirmPassword);
         email=(EditText)findViewById(R.id.editTextEmail);
+        db = new DatabaseManager(this);
     }
     public void onClickRegister(View v){
 
