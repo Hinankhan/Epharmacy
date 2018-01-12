@@ -41,9 +41,15 @@ public class Register extends AppCompatActivity {
             password.setError("Password must be atleast 8 chars long");
         else if(!password.getText().toString().equals(confirmPassword.getText().toString()))
             confirmPassword.setError("Confirm password must match with password field");
-        else
-            Toast.makeText(this,"welcome",Toast.LENGTH_LONG).show();
+        else {
+            //Toast.makeText(this,"welcome",Toast.LENGTH_LONG).show();
+            boolean result = db.registerUser(email.getText().toString(), username.getText().toString(), password.getText().toString());
+            if(result == true)
+                Toast.makeText(this,"Registered successfully",Toast.LENGTH_LONG).show();
+            else
+                Toast.makeText(this,"Error occurred, Try again",Toast.LENGTH_LONG).show();
 
+        }
     }
 
     boolean isUsernameValid(String name){
