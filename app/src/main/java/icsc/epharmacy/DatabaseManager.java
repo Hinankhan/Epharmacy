@@ -2,8 +2,10 @@ package icsc.epharmacy;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by HINAN on 1/11/2018.
@@ -40,5 +42,20 @@ public class DatabaseManager extends SQLiteOpenHelper{
         else
             return true;
 
+    }
+
+    public boolean isUserRegistered(String username, String password) {
+        SQLiteDatabase db = this.getReadableDatabase();
+       Cursor cur = db.rawQuery("select * from Users where Username = '" + username+ "' and Password = '" +password+ "'",null);
+            if(cur != null) {
+                cur.moveToFirst();
+                Log.d("Database",cur.getString(0)+" "+cur.getString(1)+" "+cur.getString(2));
+                if(cur.getCount() > 0 )
+                    return true;
+                else
+                    return false;
+            }
+
+        return false;
     }
 }

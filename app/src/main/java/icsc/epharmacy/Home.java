@@ -16,6 +16,7 @@ public class Home extends AppCompatActivity {
     private EditText password;
     private Button signIn;
     private TextView signUp;
+    DatabaseManager db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +26,7 @@ public class Home extends AppCompatActivity {
         password = (EditText) findViewById(R.id.editTextPassword);
         signIn = (Button) findViewById(R.id.buttonSignIn);
         signUp = (TextView) findViewById(R.id.textViewSignUp);
+        db = new DatabaseManager(this);
     }
 
     public void onClickSignIn(View v){
@@ -37,8 +39,13 @@ public class Home extends AppCompatActivity {
             username.setError("Username must contain atleast 3 chars ");
         else if(!isPasswordValid(password.getText().toString()))
             password.setError("Password must be atleast 8 chars long");
-        else
-            Toast.makeText(this,"welcome",Toast.LENGTH_LONG).show();
+        else {
+           boolean result = db.isUserRegistered(username.getText().toString(),password.getText().toString());
+            if(result == true)
+                Toast.makeText(this, "User Logged In", Toast.LENGTH_LONG).show();
+            else
+                Toast.makeText(this, "Either username or password is incorrect", Toast.LENGTH_LONG).show();
+        }
 
     }
 
