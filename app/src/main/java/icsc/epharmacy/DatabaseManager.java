@@ -45,13 +45,16 @@ public class DatabaseManager extends SQLiteOpenHelper{
     }
 
     public boolean isUserRegistered(String username, String password) {
+        Log.d("Database", username + password);
         SQLiteDatabase db = this.getReadableDatabase();
        Cursor cur = db.rawQuery("select * from Users where Username = '" + username+ "' and Password = '" +password+ "'",null);
-            if(cur != null) {
+        Log.d("Database", cur.toString());
+        if(cur != null) {
                 cur.moveToFirst();
-                Log.d("Database",cur.getString(0)+" "+cur.getString(1)+" "+cur.getString(2));
-                if(cur.getCount() > 0 )
+                if(cur.getCount() > 0 ) {
+                    Log.d("Database",cur.getString(0)+" "+cur.getString(1)+" "+cur.getString(2));
                     return true;
+                }
                 else
                     return false;
             }
