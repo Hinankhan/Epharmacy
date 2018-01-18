@@ -20,7 +20,7 @@ public class DatabaseManager extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("Create table Users(Email varchar(30) Primary key,Username varchar(30),Password varchar(30) ) ");
+        db.execSQL("Create table Users(Email varchar(30) Primary key,Username varchar(30),Password varchar(30), UserType varchar(30) ) ");
     }
 
     @Override
@@ -29,11 +29,12 @@ public class DatabaseManager extends SQLiteOpenHelper{
         onCreate(db);
     }
 
-    public boolean registerUser(String email, String username, String password){
+    public boolean registerUser(String email, String username, String password, String type){
         ContentValues cv = new ContentValues();
         cv.put("Email",email);
         cv.put("Username",username);
         cv.put("Password",password);
+        cv.put("UserType",type);
 
         SQLiteDatabase db = this.getWritableDatabase();
        long r = db.insert("Users",null,cv);
@@ -52,7 +53,8 @@ public class DatabaseManager extends SQLiteOpenHelper{
         if(cur != null) {
                 cur.moveToFirst();
                 if(cur.getCount() > 0 ) {
-                    Log.d("Database",cur.getString(0)+" "+cur.getString(1)+" "+cur.getString(2));
+                    Log.d("Database",cur.getString(0)+" "+cur.getString(1)+" "+cur.getString(2)+ " " +cur.getString(3));
+
                     return true;
                 }
                 else

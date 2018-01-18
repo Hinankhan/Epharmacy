@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 public class Register extends AppCompatActivity {
@@ -12,6 +13,8 @@ public class Register extends AppCompatActivity {
     private EditText password;
     private EditText confirmPassword;
     private EditText email;
+    private RadioButton customer;
+    private RadioButton retailer;
     DatabaseManager db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +24,8 @@ public class Register extends AppCompatActivity {
         password=(EditText)findViewById(R.id.editTextPassword);
         confirmPassword=(EditText)findViewById(R.id.editTextConfirmPassword);
         email=(EditText)findViewById(R.id.editTextEmail);
+        customer = (RadioButton) findViewById(R.id.radioButtonCustomer);
+        retailer = (RadioButton) findViewById(R.id.radioButtonRetailer);
         db = new DatabaseManager(this);
     }
     public void onClickRegister(View v){
@@ -42,9 +47,14 @@ public class Register extends AppCompatActivity {
         else if(!password.getText().toString().equals(confirmPassword.getText().toString()))
             confirmPassword.setError("Confirm password must match with password field");
         else {
-            //Toast.makeText(this,"welcome",Toast.LENGTH_LONG).show();
-            boolean result = db.registerUser(email.getText().toString(), username.getText().toString(), password.getText().toString());
-            if(result == true)
+            boolean result;
+            if(customer.isChecked()) {
+                result = db.registerUser(email.getText().toString(), username.getText().toString(), password.getText().toString(),"Customer");
+            }
+            else{
+                 result = db.registerUser(email.getText().toString(), username.getText().toString(), password.getText().toString(),"Retailer");
+            }
+                if(result == true)
                 Toast.makeText(this,"Registered successfully",Toast.LENGTH_LONG).show();
             else
                 Toast.makeText(this,"Error occurred, Try again",Toast.LENGTH_LONG).show();

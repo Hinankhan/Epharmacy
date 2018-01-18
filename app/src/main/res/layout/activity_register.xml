@@ -7,16 +7,16 @@
     tools:context="icsc.epharmacy.Register">
 
     <LinearLayout
-        android:layout_width="395dp"
-        android:layout_height="587dp"
+        android:layout_width="368dp"
+        android:layout_height="0dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="-313dp"
         android:orientation="vertical"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp">
 
         <TextView
             android:id="@+id/textView"
@@ -73,6 +73,37 @@
             android:hint="Confirm Password"
             android:inputType="textPassword" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="horizontal">
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/radioButtonCustomer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="true"
+                    android:text="Customer" />
+
+                <RadioButton
+                    android:id="@+id/radioButtonRetailer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:text="Retailer" />
+            </RadioGroup>
+
+        </LinearLayout>
+
         <Button
             android:id="@+id/buttonRegister"
             android:layout_width="match_parent"
@@ -88,4 +119,5 @@
             android:textStyle="bold" />
 
     </LinearLayout>
+
 </android.support.constraint.ConstraintLayout>
