@@ -3,6 +3,7 @@ package icsc.epharmacy;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,9 +41,17 @@ public class Home extends AppCompatActivity {
         else if(!isPasswordValid(password.getText().toString()))
             password.setError("Password must be atleast 8 chars long");
         else {
-           boolean result = db.isUserRegistered(username.getText().toString(),password.getText().toString());
-            if(result == true)
-                Toast.makeText(this, "User Logged In", Toast.LENGTH_LONG).show();
+           String  type = db.isUserRegistered(username.getText().toString(),password.getText().toString());
+            Log.d("Home",type);
+            if(type.equals("Customer")) {
+               // Toast.makeText(this, "User Logged In", Toast.LENGTH_LONG).show();
+                Intent i = new Intent(this,CustomerActivity.class);
+                startActivity(i);
+            }
+            else if (type.equals("Retailer")){
+                Intent i = new Intent(this,RetailerActivity.class);
+                startActivity(i);
+            }
             else
                 Toast.makeText(this, "Either username or password is incorrect", Toast.LENGTH_LONG).show();
         }

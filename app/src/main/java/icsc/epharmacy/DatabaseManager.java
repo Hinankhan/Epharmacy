@@ -13,6 +13,11 @@ import android.util.Log;
 
 public class DatabaseManager extends SQLiteOpenHelper{
 
+    private final String USERS_TABLE = "Users";
+    private final String USERS_COL1 = "Email";
+    private final String USERS_COL2 = "Username";
+    private final String USERS_COL3 = "Password";
+    private final String USERS_COL4 = "UserType";
 
     public DatabaseManager(Context context) {
         super(context, "Epharmacy", null, 1);
@@ -20,24 +25,24 @@ public class DatabaseManager extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("Create table Users(Email varchar(30) Primary key,Username varchar(30),Password varchar(30), UserType varchar(30) ) ");
+        db.execSQL("Create table"+ USERS_TABLE+"("+USERS_COL1+" varchar(30) Primary key,"+USERS_COL2+" varchar(30),"+USERS_COL3+" varchar(30), "+USERS_COL4+" varchar(30) ) ");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        db.execSQL("Drop table if exists Users");
+        db.execSQL("Drop table if exists"+ USERS_TABLE);
         onCreate(db);
     }
 
     public boolean registerUser(String email, String username, String password, String type){
         ContentValues cv = new ContentValues();
-        cv.put("Email",email);
-        cv.put("Username",username);
-        cv.put("Password",password);
-        cv.put("UserType",type);
+        cv.put(USERS_COL1,email);
+        cv.put(USERS_COL2,username);
+        cv.put(USERS_COL3,password);
+        cv.put(USERS_COL4,type);
 
         SQLiteDatabase db = this.getWritableDatabase();
-       long r = db.insert("Users",null,cv);
+       long r = db.insert(USERS_TABLE,null,cv);
         if(r == -1)
             return false;
         else
@@ -45,22 +50,22 @@ public class DatabaseManager extends SQLiteOpenHelper{
 
     }
 
-    public boolean isUserRegistered(String username, String password) {
+    public String isUserRegistered(String username, String password) {
         Log.d("Database", username + password);
         SQLiteDatabase db = this.getReadableDatabase();
-       Cursor cur = db.rawQuery("select * from Users where Username = '" + username+ "' and Password = '" +password+ "'",null);
+       Cursor cur = db.rawQuery("select * from "+USERS_TABLE+" where "+USERS_COL2+" = '" + username+ "' and "+USERS_COL3+" = '" +password+ "'",null);
         Log.d("Database", cur.toString());
         if(cur != null) {
                 cur.moveToFirst();
                 if(cur.getCount() > 0 ) {
-                    Log.d("Database",cur.getString(0)+" "+cur.getString(1)+" "+cur.getString(2)+ " " +cur.getString(3));
+                    Log.d("Database",cur.getString(3));
 
-                    return true;
+                    return cur.getString(3);
                 }
                 else
-                    return false;
+                    return null;
             }
 
-        return false;
+        return null;
     }
 }
