@@ -18,14 +18,24 @@ public class DatabaseManager extends SQLiteOpenHelper{
     private final String USERS_COL2 = "Username";
     private final String USERS_COL3 = "Password";
     private final String USERS_COL4 = "UserType";
+    private final String RETAILERS_TABLE = "Retailer";
+    private final String RETAILERS_COL1 = "StoreID";
+    private final String RETAILERS_COL2 = "StoreName";
+    private final String RETAILERS_COL3 = "Address";
+    private final String RETAILERS_COL4 = "PhoneNumber";
+    private final String RETAILERS_COL5 = "Website";
+
 
     public DatabaseManager(Context context) {
         super(context, "Epharmacy", null, 1);
     }
 
+
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("Create table"+ USERS_TABLE+"("+USERS_COL1+" varchar(30) Primary key,"+USERS_COL2+" varchar(30),"+USERS_COL3+" varchar(30), "+USERS_COL4+" varchar(30) ) ");
+        db.execSQL("Create table "+ USERS_TABLE+"("+USERS_COL1+" varchar(30) Primary key,"+USERS_COL2+" varchar(30),"+USERS_COL3+" varchar(30), "+USERS_COL4+" varchar(30) ) ");
+        db.execSQL("Create table "+ RETAILERS_TABLE+"("+RETAILERS_COL1+" varchar(30) Primary key,"+RETAILERS_COL2+" varchar(30),"+RETAILERS_COL3+" varchar(30), "+RETAILERS_COL4+" integer(30), "+RETAILERS_COL5+" varchar(30) ) ");
+
     }
 
     @Override
@@ -33,7 +43,7 @@ public class DatabaseManager extends SQLiteOpenHelper{
         db.execSQL("Drop table if exists"+ USERS_TABLE);
         onCreate(db);
     }
-
+    // Stores the information of a new user in database table
     public boolean registerUser(String email, String username, String password, String type){
         ContentValues cv = new ContentValues();
         cv.put(USERS_COL1,email);
@@ -49,7 +59,7 @@ public class DatabaseManager extends SQLiteOpenHelper{
             return true;
 
     }
-
+// checks whether user is registered or not an returs the type of user
     public String isUserRegistered(String username, String password) {
         Log.d("Database", username + password);
         SQLiteDatabase db = this.getReadableDatabase();
